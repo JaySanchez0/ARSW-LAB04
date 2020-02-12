@@ -97,8 +97,8 @@ public class Blueprint implements Serializable{
 		this.author = author;
 	}
 
-	public void setPoints(List<Point> points) {
-		this.points = points;
+	public synchronized void setPoints(List<Point> points) {
+			this.points = points;
 	}
 
 	public void setName(String name) {

@@ -5,6 +5,16 @@
 	<body>
 		<h1>Get Students</h1>
 		<br></br><div id="blueprints"></div>
+		<h1>Nuevo</h1>
+		Nombre: <input type="text" id="nombre" />
+		Autor: <input type="text" id="autor" />
+		<br></br>
+		Points: <div id="puntos"></div>
+		<br></br>
+		Nuevo punto:
+		<br /> X: <input type="number" id="xc" /> Y: <input type="number" id="yc" />
+		<button onclick="add()">Add</button>
+		<br /><button onclick="registrar()">Registrar</button>
 		<script type="text/javascript">
 			$.get({
 				url:"/blueprints",
@@ -19,6 +29,30 @@
 					document.getElementById("blueprints").innerHTML=cad;
 				}
 			});
+			var points = [];
+			function add(){
+				var a = document.getElementById("xc").value;
+				var b = document.getElementById("yc").value;
+				points.push({x:a,y:b});
+				console.log(points);
+				var txt = document.getElementById("puntos").innerText;
+				document.getElementById("puntos").innerText = txt+" ("+a+","+b+") ";
+			}
+			function registrar(){
+				var nombre = document.getElementById("nombre").value;
+				var autor = document.getElementById("autor").value;
+				var ob = {author:autor,name:nombre,points:points};
+				console.log(ob);
+				$.ajax({
+					type:"POST",
+					url:"/blueprints",
+					data:JSON.stringify(ob),
+					success:function(data){
+						console.log("salio");
+					},
+					contentType:"application/json; charset=UTF-8"
+				})
+			}
 		</script>
 	</body>
 </html>

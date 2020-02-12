@@ -54,12 +54,14 @@ public class BlueprintAPIController {
 	}
 	@RequestMapping(method=RequestMethod.PUT)
 	public ResponseEntity<?> update(@RequestBody Blueprint blue){
+		System.out.println("b "+blue+" "+blue.getPoints());
 		try {
-			Blueprint b = bpp.getBlueprint(blue.getName(), blue.getAuthor());
+			Blueprint b = bpp.getBlueprint(blue.getAuthor(), blue.getName());
 			b.setPoints(blue.getPoints());
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
 		} catch (BlueprintNotFoundException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(false,HttpStatus.NOT_FOUND);
 		}
+		//return new ResponseEntity(true,HttpStatus.ACCEPTED);
 	}
 }
