@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
-
+import java.util.concurrent.ConcurrentHashMap;
 /**
  *
  * @author hcadavid
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component("InMemoryBlueprintPersistence")
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
+    private final Map<Tuple<String,String>,Blueprint> blueprints=new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data

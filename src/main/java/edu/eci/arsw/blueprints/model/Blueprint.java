@@ -1,6 +1,7 @@
 package edu.eci.arsw.blueprints.model;
 
 import java.io.Serializable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
