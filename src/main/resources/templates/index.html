@@ -1,0 +1,24 @@
+<html>
+	<head><title>Test</title>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	</head>
+	<body>
+		<h1>Get Students</h1>
+		<br></br><div id="blueprints"></div>
+		<script type="text/javascript">
+			$.get({
+				url:"/blueprints",
+				data:{},
+				success:function(data){
+					var cad = "<table><tr><td>Author</td><td>Nombre</td></tr>";
+					data.forEach(function(dato){
+						cad=cad+"<tr><td>"+dato.author+"</td><td>"+dato.name+"</td></tr>"
+					});
+					cad=cad+"</table>";
+					console.log(cad);
+					document.getElementById("blueprints").innerHTML=cad;
+				}
+			});
+		</script>
+	</body>
+</html>
