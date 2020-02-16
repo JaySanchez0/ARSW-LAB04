@@ -14,13 +14,14 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
 @RestController
 @RequestMapping(value="/blueprints")
 public class BlueprintAPIController {
 	@Autowired
-    @Qualifier("InMemoryBlueprintPersistence")
-    BlueprintsPersistence bpp=null;
+    @Qualifier("services")
+    BlueprintsServices bpp=null;
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -30,7 +31,11 @@ public class BlueprintAPIController {
 	
 	@RequestMapping(value="/{author}",method=RequestMethod.GET)
 	public ResponseEntity<?> getBlueprintByAuthor(@PathVariable String author){
-		return new ResponseEntity<>(bpp.getBluePrintsByAutor(author),HttpStatus.ACCEPTED);
+		try {
+			return new ResponseEntity<>(bpp.getBlueprintsByAuthor(author),HttpStatus.ACCEPTED);
+		} catch (BlueprintNotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value="/{author}/{bpname}",method=RequestMethod.GET )
@@ -46,7 +51,7 @@ public class BlueprintAPIController {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<?> register(@RequestBody Blueprint blue){
 		try {
-			bpp.saveBlueprint(blue);
+			bpp.addNewBlueprint(blue);
 			return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
 		} catch (BlueprintPersistenceException e) {
 			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
