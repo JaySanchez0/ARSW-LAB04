@@ -57,11 +57,11 @@ public class BlueprintAPIController {
 			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
 		}
 	}
-	@RequestMapping(method=RequestMethod.PUT)
-	public ResponseEntity<?> update(@RequestBody Blueprint blue){
+	@RequestMapping(value="/{autor}/{nombre}",method=RequestMethod.PUT)
+	public ResponseEntity<?> update(@PathVariable String autor,@PathVariable String nombre ,@RequestBody Blueprint blue){
 		System.out.println("b "+blue+" "+blue.getPoints());
 		try {
-			Blueprint b = bpp.getBlueprint(blue.getAuthor(), blue.getName());
+			Blueprint b = bpp.getBlueprint(autor, nombre);
 			b.setPoints(blue.getPoints());
 			return new ResponseEntity<>(true,HttpStatus.ACCEPTED);
 		} catch (BlueprintNotFoundException e) {
