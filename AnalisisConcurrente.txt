@@ -1,0 +1,15 @@
+The BlueprintsRESTAPI component will work in a concurrent environment. That is, it will attend multiple requests simultaneously (with the stack of applications used, 
+these requests will be attended by default across multiple threads). Given the above, you should review your API (once it works), and identify:
+
+What race conditions could occur?
+Encontramos varias condiciones de carrera, una de ellas es cuando dos hilos estan tratando de acceder a la misma lista, como de igual manera cuando el "blueprint" 
+se este modificando por mas de dos usuarios.
+
+What are the respective critical regions?
+
+Se presentan regiones criticas al momento de actualizar o cunsultar las funcionalidades  del bluePrint.
+ 
+Set the code to suppress race conditions. Keep in mind that simply synchronizing access to persistence/query operations will significantly degrade the API performance,
+ so you should look for alternative strategies.
+
+Para solucionar las condiciones de carrera se decidio implementar un hashmap concuncurrente que es thread safe y funciona para multiples procesos concurrentes.

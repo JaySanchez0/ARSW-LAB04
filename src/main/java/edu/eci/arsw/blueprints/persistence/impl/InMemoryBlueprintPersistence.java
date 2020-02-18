@@ -19,7 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component("InMemoryBlueprintPersistence")
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Tuple<String, String>, Blueprint> blueprints = new ConcurrentHashMap<>();
+    
 
     public InMemoryBlueprintPersistence() {
         //load stub data
